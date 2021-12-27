@@ -3,5 +3,6 @@
        "transpileOnly": true
       },
   "compilerOptions": {
+    "esModuleInterop": true,
   }
 }

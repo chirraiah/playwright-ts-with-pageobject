@@ -5,8 +5,7 @@
   "main": "index.js",
   "scripts": {
     "report": "open reports/report.html",
-    "test":"cucumber-js",
-    "test1": "cucumber-js features/**/*.feature --require-module ts-node/register --require test.setup.ts --require step-definitions/**/*.ts --format json:reports/report.json --format html:reports/report.html ts-node ./src/reporter/cucumber-report.ts"
+    "test":"cucumber-js"
   },
   "keywords": [],
   "author": "",

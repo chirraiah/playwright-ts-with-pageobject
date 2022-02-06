@@ -13,7 +13,6 @@ const common = `
 
 const getWorldParams = () => {
   const params = {
-    foo: 'bar',
   };
 
   return `--world-parameters ${JSON.stringify({ params })}`;

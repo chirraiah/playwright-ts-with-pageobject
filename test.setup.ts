@@ -2,12 +2,14 @@
 import { Before, BeforeAll, AfterAll, After } from "@cucumber/cucumber";
 import { devices, chromium } from "playwright";
 import { OurWorld } from "./types";
+import {playwrightconfig} from "./config/playwrightconfig";
 BeforeAll(async function () {
   // Browsers are expensive in Playwright so only create 1
   global.browser = await chromium.launch({
     // Not headless so we can watch test runs
-    headless: false,
+    //headless: false,
     // Slow so we can see things happening
+    headless:playwrightconfig.headless,
     slowMo: 50,
   });
 });
@@ -16,11 +18,6 @@ AfterAll(async function () {
 });
 // Create a new test context and page per scenario
 Before(async function (this: OurWorld) {
-  /*const pixel2 = devices["Pixel 2"];
-  this.context = await global.browser.newContext({
-    viewport: pixel2.viewport,
-    userAgent: pixel2.userAgent,
-  }); */
   this.context = await global.browser.newContext();
   this.page = await this.context.newPage();
 });

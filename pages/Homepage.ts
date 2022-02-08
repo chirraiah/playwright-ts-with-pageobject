@@ -9,7 +9,7 @@ export class HomePage {
     }
 
     public async clickSignUpButton() {
-        await this.homePageObject.click(`"Sign up"`);
+        await this.homePageObject.click(`"Sign u"`);
     }
 
     public async getSignUpText(){

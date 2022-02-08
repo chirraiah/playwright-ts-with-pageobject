@@ -1,17 +1,25 @@
 // test.setup.ts
 import { Before, BeforeAll, AfterAll, After } from "@cucumber/cucumber";
-import { devices, chromium } from "playwright";
+import playwright, {  BrowserType } from "playwright";
 import { OurWorld } from "./types";
 import {playwrightconfig} from "./config/playwrightconfig";
 BeforeAll(async function () {
   // Browsers are expensive in Playwright so only create 1
+  /*
   global.browser = await chromium.launch({
-    // Not headless so we can watch test runs
-    //headless: false,
-    // Slow so we can see things happening
     headless:playwrightconfig.headless,
     slowMo: 50,
+  });*/
+
+  const automationBrowsers = ['chromium', 'firefox', 'webkit'];
+  type AutomationBrowser = typeof automationBrowsers[number];
+  const automationBrowser = 'chromium' as AutomationBrowser;
+  const browserType: BrowserType = playwright[automationBrowser];
+  const browser = await browserType.launch({
+      headless: false,
   });
+  global.browser=browser;
+
 });
 AfterAll(async function () {
   await global.browser.close();

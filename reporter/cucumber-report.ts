@@ -6,6 +6,6 @@ const options: Options = {
     output: 'reports/report.html',
     storeScreenshots: true,
     reportSuiteAsScenarios: true,
-    launchReport: true,
+    launchReport: false,
 };
 reporter.generate(options);

@@ -5,19 +5,22 @@
   "main": "index.js",
   "scripts": {
     "report": "open reports/report.html",
-    "test":"cucumber-js"
+    "precucumber": "rimraf reports && mkdir reports && echo {} > reports/report.json",
+    "test": "npm run precucumber && cucumber-js && npm run postcucumber",
+    "postcucumber": "ts-node ./reporter/cucumber-report.ts"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "@cucumber/cucumber": "^8.0.0-rc.1",
-    "@types/node": "^17.0.5",
     "expect": "^27.4.2",
-    "playwright": "^1.17.1",
+    "@cucumber/cucumber": "^8.0.0-rc.1",
     "@playwright/test": "^1.16.1",
+    "cucumber-html-reporter": "^5.5.0",
+    "dotenv": "^10.0.0",
+    "playwright": "^1.16.1",
     "ts-node": "^10.4.0",
-    "typescript": "^4.5.4",
-    "cucumber-html-reporter": "^5.5.0"
+    "typescript": "^4.4.4"
+
   }
 }

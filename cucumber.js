@@ -3,7 +3,6 @@ const common = `
   --require step-definitions/**/*.ts
   --require test.setup.ts
   --format json:reports/report.json 
-  --format message:reports/report.ndjson
   --format html:reports/report.html
   --format summary 
   --format progress-bar 

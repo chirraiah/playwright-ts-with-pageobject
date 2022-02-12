@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "report": "open reports/report.html",
-    "precucumber": "rimraf reports && mkdir reports && echo {} > reports/report.json",
+    "precucumber": "rimraf reports && rimraf recordings && mkdir reports && echo {} > reports/report.json",
     "test": "npm run precucumber && cucumber-js || npm run postcucumber",
     "postcucumber": "ts-node ./reporter/cucumber-report.ts"
   },

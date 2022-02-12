@@ -3,6 +3,7 @@ import { Before, BeforeAll, AfterAll, After } from "@cucumber/cucumber";
 import playwright, {  BrowserType } from "playwright";
 import { OurWorld } from "./types";
 import {playwrightconfig} from "./config/playwrightconfig";
+import { Browser, TestInfo } from "@playwright/test";
 BeforeAll(async function () {
   // Browsers are expensive in Playwright so only create 1
   /*
@@ -13,7 +14,7 @@ BeforeAll(async function () {
 
   const automationBrowsers = ['chromium', 'firefox', 'webkit'];
   type AutomationBrowser = typeof automationBrowsers[number];
-  const automationBrowser = 'chromium' as AutomationBrowser;
+  const automationBrowser = 'webkit' as AutomationBrowser;
   const browserType: BrowserType = playwright[automationBrowser];
   const browser = await browserType.launch({
       headless: false,
@@ -25,9 +26,39 @@ AfterAll(async function () {
   await global.browser.close();
 });
 // Create a new test context and page per scenario
-Before(async function (this: OurWorld) {
-  this.context = await global.browser.newContext();
+Before(async function (this: OurWorld,scenario: any) {
+  this.context = await global.browser.newContext({
+    recordVideo: {
+      dir: "./recordings"
+    }
+  });
   this.page = await this.context.newPage();
+  const video = this.page.video();
+  if(video) {
+    console.log('video is present');
+    const baseDir='./recordings';
+    const scenarioName = scenario.pickle.name.replace(/\W/g, "_");
+    //const todayDate = new Date().toLocaleDateString();
+    //const scenarioWithDate = `${scenarioName}+${todayDate}`;
+    video.saveAs(`${baseDir}/${scenarioName}.webm`);
+    video.delete(); // delete old video
+  }
+
+  /*
+    if (video) {
+      const title = this..title;
+      // in case someone forgets to name his test..
+      if (title) {
+        // replace all occurences of spaces in the test title
+        const videoFileName = testInfo.title.replace(/ /g, "-");
+
+        // save new video with test title as name
+        video.saveAs(`${baseDir}/${videoFileName}.webm`);
+
+        // delete old video with random ID as name
+        video.delete();
+      }
+    } */
 });
 // Cleanup after each scenario
 After(async function (this: OurWorld) {

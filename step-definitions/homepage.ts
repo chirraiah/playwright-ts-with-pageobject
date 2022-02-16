@@ -16,6 +16,11 @@ When("I click signup button", async function(this: OurWorld) {
   await homePage.clickSignUpButton();
 });
 
+When("I click signup1 button", async function(this: OurWorld) {
+  homePage = new HomePage(this.page);
+  await homePage.clickSignUpButton1();
+});
+
 Then("I expect sign up title on signup page", async function (this: OurWorld) {
   const headingText = await homePage.getSignUpText()
   expect(headingText).toEqual('SIGN UP');

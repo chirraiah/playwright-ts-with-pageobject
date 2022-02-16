@@ -33,16 +33,7 @@ Before(async function (this: OurWorld,scenario: any) {
     }
   });
   this.page = await this.context.newPage();
-  const video = this.page.video();
-  if(video) {
-    console.log('video is present');
-    const baseDir='./recordings';
-    const scenarioName = scenario.pickle.name.replace(/\W/g, "_");
-    //const todayDate = new Date().toLocaleDateString();
-    //const scenarioWithDate = `${scenarioName}+${todayDate}`;
-    video.saveAs(`${baseDir}/${scenarioName}.webm`);
-    video.delete(); // delete old video
-  }
+  
 
   /*
     if (video) {
@@ -61,7 +52,18 @@ Before(async function (this: OurWorld,scenario: any) {
     } */
 });
 // Cleanup after each scenario
-After(async function (this: OurWorld) {
+After(async function (this: OurWorld,scenario: any) {
+  const scenarioStatus = scenario.result?.status;
+  console.log(`scenario status ${scenarioStatus}`);
+  const video = this.page.video();
+  if (scenarioStatus === 'PASSED') {
+    video.delete(); // delete video
+  } else {
+    let baseDir='./recordings';
+    let scenarioName = scenario.pickle.name.replace(/\W/g, "_");
+    video.saveAs(`${baseDir}/${scenarioName}.webm`);
+    video.delete(); // delete old video
+  }
   await this.page.close();
   await this.context.close();
 });

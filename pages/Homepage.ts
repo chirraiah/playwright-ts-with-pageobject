@@ -12,6 +12,10 @@ export class HomePage {
         await this.homePageObject.click(`"Sign up"`);
     }
 
+    public async clickSignUpButton1() {
+        await this.homePageObject.click(`"Sign up1"`);
+    }
+
     public async getSignUpText(){
       return (await this.homePageObject.textContent("h1"));
     }
